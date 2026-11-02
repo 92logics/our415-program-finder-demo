@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Our415-style Program Finder — 92 Logics demonstration (not a City site)</title>
+<meta name="description" content="Demonstration by 92 Logics for the DCYF 2027 Our415 RFP. Not a City, DCYF or Our415.org website.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#results" data-i="skip">Skip to results</a>
+<div class="demo-banner" role="note" id="disclaimer"><strong>92 Logics demonstration</strong> · <span data-i="disclaimer"></span></div>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#/find"><span class="logo" aria-hidden="true">415</span><span>Program Finder <small>demo</small></span></a>
+    <nav aria-label="Main">
+      <ul class="nav">
+        <li><a href="#/find" data-route="find" data-i="navFind">Find</a></li>
+        <li><a href="#/saved" data-route="saved"><span data-i="navSaved">Saved</span> <span class="badge" id="savedCount">0</span></a></li>
+        <li><a href="admin.html" data-i="navAdmin">Data pipeline</a></li>
+        <li><a href="#/about" data-route="about" data-i="navAbout">About this demo</a></li>
+      </ul>
+    </nav>
+    <div class="tools">
+      <label for="lang" class="sr-only" data-i="langLabel">Language</label>
+      <select id="lang" aria-describedby="langNote"></select>
+      <button type="button" id="textBtn" aria-pressed="false" data-i="textSize">Larger text</button>
+    </div>
+  </div>
+  <p class="wrap lang-note" id="langNote" hidden data-i="sampleNote"></p>
+</header>
+
+<main id="main" tabindex="-1">
+  <section id="view-find" class="view wrap" aria-labelledby="h-find">
+    <h1 id="h-find" data-i="title">Find programs and activities for your family</h1>
+    <p class="lead" data-i="lead"></p>
+    <form id="searchForm" role="search" class="search">
+      <label for="q" data-i="searchLabel">What are you looking for?</label>
+      <div class="search-row">
+        <input id="q" name="q" type="search" autocomplete="off" data-iph="searchPh">
+        <button type="submit" class="primary" data-i="searchBtn">Search</button>
+      </div>
+      <p class="examples"><span data-i="tryLabel">Try:</span>
+        <button type="button" class="ex">free swimming for my 8 year old on Saturday</button>
+        <button type="button" class="ex">storytime for toddlers in Chinatown</button>
+        <button type="button" class="ex">teen basketball this weekend</button>
+        <button type="button" class="ex">natación gratis para niños</button>
+        <button type="button" class="ex">免费 儿童 艺术</button>
+      </p>
+    </form>
+    <div id="understood" class="understood" aria-live="polite"></div>
+
+    <div class="layout">
+      <aside class="filters" aria-labelledby="h-filters">
+        <h2 id="h-filters" data-i="filters">Filters</h2>
+        <label for="fAge" data-i="age">Age group</label><select id="fAge"></select>
+        <label for="fHood" data-i="hood">Neighborhood</label><select id="fHood"></select>
+        <label for="fCost" data-i="cost">Cost</label><select id="fCost"></select>
+        <label for="fCat" data-i="cat">Category</label><select id="fCat"></select>
+        <label for="fDay" data-i="day">Day</label><select id="fDay"></select>
+        <button type="button" id="clearBtn" class="link" data-i="clear">Clear all</button>
+        <p class="data-status" id="dataStatus" aria-live="polite"></p>
+      </aside>
+      <section class="results" id="results" tabindex="-1" aria-labelledby="resCount">
+        <h2 id="resCount" class="res-count" aria-live="polite"></h2>
+        <div id="map" class="map" role="region" data-ia="mapLabel"></div>
+        <p class="map-note" data-i="mapLabel"></p>
+        <ol id="list" class="cards"></ol>
+        <button type="button" id="moreBtn" class="secondary" hidden data-i="more">Show more</button>
+      </section>
+    </div>
+  </section>
+
+  <section id="view-saved" class="view wrap" hidden aria-labelledby="h-saved">
+    <h1 id="h-saved" data-i="savedTitle">Your saved programs</h1>
+    <p class="lead" data-i="savedLead"></p>
+    <ol id="savedList" class="cards"></ol>
+    <p id="savedEmpty" data-i="savedEmpty" hidden></p>
+    <h2 data-i="prefs">My preferences</h2>
+    <p data-i="prefsLead"></p>
+    <form id="prefsForm" class="prefs">
+      <label for="pAge" data-i="prefAge">My child's age group</label><select id="pAge"></select>
+      <label for="pHood" data-i="prefHood">My neighborhood</label><select id="pHood"></select>
+      <button type="submit" class="primary" data-i="prefSave">Save preferences</button>
+      <span id="prefsMsg" role="status"></span>
+    </form>
+    <h2 data-i="suggested">Suggested for you</h2>
+    <ol id="suggestList" class="cards"></ol>
+  </section>
+
+  <section id="view-about" class="view wrap" hidden aria-labelledby="h-about">
+    <h1 id="h-about">About this demonstration</h1>
+    <p><strong>This is a demonstration built by 92 Logics for the San Francisco DCYF 2027 Our415 Request for Proposals (Service Area 1: Web Design &amp; Development). It is not a City and County of San Francisco, DCYF or Our415.org website, and it is not endorsed by them.</strong></p>
+    <h2>Data</h2>
+    <p>Listings are read from the public SF Open Data dataset <a href="https://data.sf.gov/d/8i3s-ih2a">Our415 Events and Activities (8i3s-ih2a)</a>, licensed under the Open Data Commons PDDL. The page loads a snapshot taken on 2 Nov 2026 and then refreshes from the live Socrata API in your browser. Listings may be out of date; always confirm with the provider.</p>
+    <p>"Category" here is a demo-derived topic computed with simple keyword rules over the event name and description. It is not the Our415 taxonomy. Age groups are normalised from the dataset's age eligibility tags.</p>
+    <h2>Search</h2>
+    <p>The plain-language search runs entirely in your browser. A rule-based intent parser picks out an age, cost, topic, neighborhood, day and time of day from what you type (including some Spanish, Chinese and Filipino words), shows what it understood as removable chips, and widens the search if nothing matches. In production this layer could call a semantic or AI search service, with DCYF approving how AI is used.</p>
+    <h2>Languages</h2>
+    <p>Interface text is available in English, Spanish, Chinese, Filipino and Vietnamese. These are <strong>sample translations for demonstration</strong>, not reviewed by City translators. Listing content is shown in its source language.</p>
+    <h2>Saved programs</h2>
+    <p>Saving and preferences use this browser's local storage as a stand-in for user accounts. Nothing is sent to any server. No analytics or tracking are used.</p>
+    <h2>Accessibility</h2>
+    <p>Built to WCAG 2.1 AA practices: skip link, landmarks, labelled controls, visible focus, live regions for result counts, keyboard-operable everything, sufficient colour contrast, a larger-text option, reduced-motion support, and a list equivalent for every map marker. Automated axe-core checks run in our test suite. Map tiles © OpenStreetMap contributors.</p>
+    <p>Source code: <a href="https://github.com/92logics/our415-program-finder-demo">github.com/92logics/our415-program-finder-demo</a> · 92 Logics, Islamabad, Pakistan · cowork@92logics.com</p>
+  </section>
+</main>
+<footer class="foot wrap">
+  <p>92 Logics demonstration for the DCYF 2027 Our415 RFP. Not a City, DCYF or Our415.org site. Data: SF Open Data, "Our415 Events and Activities" (PDDL). Map © OpenStreetMap contributors.</p>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="core.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

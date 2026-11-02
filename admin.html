@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data pipeline status — 92 Logics Our415 demo (not a City site)</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="demo-banner" role="note" id="disclaimer"><strong>92 Logics demonstration</strong> · Demonstration by 92 Logics for the DCYF 2027 Our415 RFP. Not a City, DCYF or Our415.org site. This admin page only reads public open data; it changes nothing.</div>
+<header class="top"><div class="wrap top-in">
+  <a class="brand" href="index.html#/find"><span class="logo" aria-hidden="true">415</span><span>Program Finder <small>demo · admin</small></span></a>
+  <nav aria-label="Main"><ul class="nav"><li><a href="index.html#/find">Find</a></li><li><a href="index.html#/saved">Saved</a></li><li><a href="admin.html" aria-current="page">Data pipeline</a></li><li><a href="index.html#/about">About this demo</a></li></ul></nav>
+</div></header>
+<main id="main" class="wrap" tabindex="-1">
+  <h1>Data pipeline status</h1>
+  <p class="lead">Health of the connection between this site and the SF Open Data Portal dataset <a href="https://data.sf.gov/d/8i3s-ih2a">Our415 Events and Activities (8i3s-ih2a)</a>. In production this view would sit behind City sign-in and also cover the service registry, organizations, locations, schedules and taxonomy datasets.</p>
+  <p><button type="button" class="primary" id="runBtn">Run live check now</button> <span id="runState" role="status" aria-live="polite"></span></p>
+  <div class="kpis" id="kpis" aria-live="polite"></div>
+  <h2>Checks</h2>
+  <table id="checks"><caption class="sr-only">Pipeline checks</caption><thead><tr><th scope="col">Check</th><th scope="col">Result</th><th scope="col">Detail</th></tr></thead><tbody></tbody></table>
+  <h2>Records by source and by demo topic</h2>
+  <div class="layout" style="grid-template-columns:1fr 1fr;align-items:start">
+    <table id="bySource"><caption class="sr-only">Records by source</caption><thead><tr><th scope="col">Source</th><th scope="col">Records</th></tr></thead><tbody></tbody></table>
+    <table id="byTopic"><caption class="sr-only">Records by topic</caption><thead><tr><th scope="col">Demo topic</th><th scope="col">Records</th></tr></thead><tbody></tbody></table>
+  </div>
+  <h2>Records needing attention (sample)</h2>
+  <p>Records the site cannot place on the map or in a neighborhood filter. In production these would be routed to the Data Verification contractor.</p>
+  <table id="issues"><caption class="sr-only">Records needing attention</caption><thead><tr><th scope="col">ID</th><th scope="col">Name</th><th scope="col">Issue</th></tr></thead><tbody></tbody></table>
+  <h2>Recent fetches from this browser</h2>
+  <table id="log"><caption class="sr-only">Fetch log</caption><thead><tr><th scope="col">When (your time)</th><th scope="col">Page</th><th scope="col">Result</th><th scope="col">Rows</th><th scope="col">Time</th></tr></thead><tbody></tbody></table>
+</main>
+<footer class="foot wrap"><p>92 Logics demonstration for the DCYF 2027 Our415 RFP. Not a City, DCYF or Our415.org site. Data: SF Open Data (PDDL).</p></footer>
+<script src="core.js"></script>
+<script src="admin.js"></script>
+</body></html>
