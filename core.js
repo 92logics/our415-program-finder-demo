@@ -5,6 +5,7 @@
   const AGE_BUCKETS = ['baby', 'child', 'teen', 'tay', 'family'];
   const TOPICS = ['reading', 'swim', 'sports', 'arts', 'stem', 'learning', 'outdoors', 'other'];
   const TOPIC_RULES = [
+    ['learning', /\b(after ?school|afterschool|homework|tutor\w*)\b/i],
     ['reading', /\b(story ?time|storytime|story hour|book|read|reading|librar|picture book|rhyme|literacy)\b/i],
     ['swim', /\b(swim|pool|aquatic|water exercise|lap)\b/i],
     ['stem', /\b(stem|steam|science|robot|coding|code|tech|computer|math|lego|maker|engineer|3d|chess)\b/i],
